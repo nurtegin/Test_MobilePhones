@@ -24,7 +24,7 @@ namespace MobilePhones.Controllers
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public IActionResult Privacy()
         {
             return View();
