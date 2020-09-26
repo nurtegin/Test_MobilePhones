@@ -20,14 +20,14 @@ namespace MobilePhones.Controllers
         }
 
         // GET: Phones
-        [Authorize(Roles = "admin, member")]
+        [Authorize(Roles = "admin, member, manager")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Phones.ToListAsync());
         }
 
         // GET: Phones/Details/5
-        [Authorize(Roles = "admin, member")]
+        [Authorize(Roles = "admin, member, manager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,7 +46,7 @@ namespace MobilePhones.Controllers
         }
 
         // GET: Phones/Create
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, manager")]
         public IActionResult Create()
         {
             return View();
@@ -57,7 +57,7 @@ namespace MobilePhones.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, manager")]
         public async Task<IActionResult> Create([Bind("Id,Name,Company,Price")] Phone phone)
         {
             if (ModelState.IsValid)
@@ -70,7 +70,7 @@ namespace MobilePhones.Controllers
         }
 
         // GET: Phones/Edit/5
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,7 +91,7 @@ namespace MobilePhones.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, manager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Company,Price")] Phone phone)
         {
             if (id != phone.Id)
