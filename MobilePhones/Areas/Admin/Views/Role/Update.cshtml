@@ -1,0 +1,67 @@
+﻿@model RoleEdit
+
+<h1 class="bg-info text-white">Update a Role</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post">
+
+    <input type="hidden" name="RoleName" value="@Model.Role.Name" />
+    <input type="hidden" name="RoleId" value="@Model.Role.Id" />
+
+    <h3>Удалит роль @Model.Role.NormalizedName с пользователей:</h3>
+
+    @if (Model.Members.Count() == 0)
+    {
+        <p>Нет пользователей для удаления с этой роли </p>
+    }
+    else
+    {
+        <div class="list-group">
+            @foreach (User user in Model.Members)
+            {
+
+
+                <div class="list-group-item list-group-item-action alert-info">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               value="@user.Id" id="delete-@user.Id" name="DeleteIds">
+                        <label class="form-check-label" for="delete-@user.Id">
+                            @user.UserName
+                        </label>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+<hr />
+    <h3>Добавить роль @Model.Role.NormalizedName для пользователей: </h3>
+
+    @if (Model.NonMembers.Count() == 0)
+    {
+        <p>Нет пользователей для добавления в данную роль </p>
+    }
+    else
+    {
+        <div class="list-group">
+            @foreach (User user in Model.NonMembers)
+            {
+                <div class="list-group-item list-group-item-action alert-info">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="@user.Id" id="add-@user.Id" name="AddIds">
+                        <label class="form-check-label" for="add-@user.Id">
+                            @user.UserName
+                        </label>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <hr />
+    <button type="submit" class="btn btn-primary mb-2">Обновить список </button>
+</form>
+
+
+

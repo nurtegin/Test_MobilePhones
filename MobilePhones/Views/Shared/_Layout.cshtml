@@ -26,21 +26,15 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Phones" asp-action="Index">Phones</a>
+                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
                         </li>
-                        @if (User.IsInRole("admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Index">Role</a>
-                            </li>
-                        }
+
 
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-
                                 <form method="post" asp-controller="Account" asp-action="LogOff" class="nav-link text-dark">
-                                    <input type="submit" value="@User.Identity.Name Выход" />
+                                    <input type="submit" value="@User.Identity.Name Выход" class="form-control"/>
                                 </form>
 
                             </li>

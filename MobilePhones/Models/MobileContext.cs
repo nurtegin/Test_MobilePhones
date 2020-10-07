@@ -11,6 +11,7 @@ namespace MobilePhones.Models
     {
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public MobileContext(DbContextOptions<MobileContext> options)
             : base(options)
