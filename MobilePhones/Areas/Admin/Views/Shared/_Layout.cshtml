@@ -16,10 +16,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <form action="/Admin/Phones" method="get" class="w-100">
-            <input name="search" class="form-control form-control-dark w-100" 
+            <input name="search" class="form-control form-control-dark w-100"
                    type="text" placeholder="Search Phones" aria-label="Search">
         </form>
-            <ul class="navbar-nav px-3">
+        <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <a class="nav-link" href="#">Sign out</a>
             </li>
@@ -52,7 +52,17 @@
                                     Roles
                                 </a>
                             </li>
-                        }                     
+                        }
+
+                    </ul>
+
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                <span data-feather="file-text"></span>
+                                Client side root page
+                            </a>
+                        </li>
 
                     </ul>
 
@@ -75,7 +85,7 @@
                                 Last quarter
                             </a>
                         </li>
-                        
+
                     </ul>
                 </div>
             </nav>
@@ -96,6 +106,7 @@
     <script src="~/lib/fontawesome/js/all.min.js"></script>
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/custom.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

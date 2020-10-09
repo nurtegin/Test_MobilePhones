@@ -22,7 +22,7 @@
             {
 
 
-                <div class="list-group-item list-group-item-action alert-info">
+                <div class="list-group-item list-group-item-action alert-info js-user-role-items">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox"
                                value="@user.Id" id="delete-@user.Id" name="DeleteIds">
@@ -47,7 +47,7 @@
         <div class="list-group">
             @foreach (User user in Model.NonMembers)
             {
-                <div class="list-group-item list-group-item-action alert-info">
+                <div class="list-group-item list-group-item-action alert-info js-user-role-items">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="@user.Id" id="add-@user.Id" name="AddIds">
                         <label class="form-check-label" for="add-@user.Id">
@@ -62,6 +62,5 @@
     <hr />
     <button type="submit" class="btn btn-primary mb-2">Обновить список </button>
 </form>
-
 
 
