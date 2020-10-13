@@ -43,6 +43,7 @@ namespace MobilePhones.Controllers
             return View(phone);
         }
 
+
         private bool PhoneExists(int id)
         {
             return _context.Phones.Any(e => e.Id == id);

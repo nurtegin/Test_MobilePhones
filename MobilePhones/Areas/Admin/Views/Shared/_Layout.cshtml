@@ -6,8 +6,10 @@
     <title>@ViewData["Title"] - Admin Panel</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css"  />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap4/css/select2-bootstrap4.min.css"  />
     <link rel="stylesheet" href="~/css/site.css" />
-    
+
 </head>
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -41,6 +43,13 @@
                             <a class="nav-link" asp-area="Admin" asp-controller="Phones" asp-action="Index">
                                 <i class="fas fa-mobile-alt"></i>
                                 Phones
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="Index">
+                                <i class="fas fa-file-alt"></i>
+                                Orders
                             </a>
                         </li>
 
@@ -107,6 +116,8 @@
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/custom.js" asp-append-version="true"></script>
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <script src="~/js/select2.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

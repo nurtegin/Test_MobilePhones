@@ -168,6 +168,22 @@ namespace MobilePhones.Areas.Admin.Controllers
             return RedirectToAction("Details", new { id = comment.PhoneId });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Search(string term)
+        {
+            if (!string.IsNullOrEmpty(term))
+            {
+                var phones = await _context.Phones.ToListAsync();
+                var data = phones.Where(a => a.Name.Contains(term, StringComparison.OrdinalIgnoreCase)
+                || a.Company.Contains(term, StringComparison.OrdinalIgnoreCase)).ToList().AsReadOnly();
+                return Ok(data);
+            }
+            else
+            {
+                return Ok();
+            }
+        }
+
         private bool PhoneExists(int id)
         {
             return _context.Phones.Any(e => e.Id == id);
