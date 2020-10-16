@@ -1,7 +1,8 @@
 ﻿
 $(".ordersSelect2").select2({
     placeholder: "Введите слово для поиска",
-    theme: "bootstrap4",
+    language: "ru",
+    //theme: "bootstrap4",
     allowClear: true,
     ajax: {
         url: "/Admin/Phones/Search",
@@ -20,12 +21,14 @@ $(".ordersSelect2").select2({
                 results: $.map(result, function (item) {
                     return {
                         id: item.id,
-                        text: item.name + ' | ' + item.company + ' | $ ' + item.price
+                        text: item.name + ' | ' + item.company + ' | $ ' + item.price,
+                        file_name: item.imageName
                     };
                 }),
             };
         }
-    }
+    },
+    templateResult: formatState
 });
 
 $(".defaultSelect2").select2({
@@ -33,3 +36,14 @@ $(".defaultSelect2").select2({
     theme: "bootstrap4",
     allowClear: true
 });
+
+function formatState(state) {
+    if (!state.id) {
+        return state.text;
+    }
+    var baseUrl = "/images/phone_images/" + state.file_name;
+    var $state = $(
+        '<span><img src="' + baseUrl + '" class="img-flag" width="30"/> ' + state.text + '</span>'
+    );
+    return $state;
+};

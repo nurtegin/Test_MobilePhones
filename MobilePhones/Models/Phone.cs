@@ -1,4 +1,5 @@
-﻿using MobilePhones.ViewModels;
+﻿using Microsoft.AspNetCore.Http;
+using MobilePhones.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,17 @@ namespace MobilePhones.Models
 
         [NotMapped]
         public CommentForm CommentForm { get; set; }
+
+        public string ImageName { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
+
+
+        public string ImagePath()
+        {
+            return $"/images/phone_images/{ImageName}";
+        }
 
     }
 }

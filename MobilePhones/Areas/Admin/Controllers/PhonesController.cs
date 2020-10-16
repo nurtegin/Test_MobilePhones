@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +17,12 @@ namespace MobilePhones.Areas.Admin.Controllers
     public class PhonesController : Controller
     {
         private readonly MobileContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PhonesController(MobileContext context)
+        public PhonesController(MobileContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Admin/Phones
@@ -65,10 +69,23 @@ namespace MobilePhones.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Company,Price")] Phone phone)
+        public async Task<IActionResult> Create([Bind("Id,Name,Company,Price,ImageFile")] Phone phone)
         {
             if (ModelState.IsValid)
             {
+                if(phone.ImageFile != null)
+                {
+                    string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "phone_images");
+                    string fileName = $"{Guid.NewGuid().ToString()}_{phone.ImageFile.FileName}";
+                    string filePath = Path.Combine(folderPath, fileName);
+
+                    using(var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        phone.ImageFile.CopyTo(stream);
+                    }
+
+                    phone.ImageName = fileName;
+                }
                 _context.Add(phone);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,7 +114,7 @@ namespace MobilePhones.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Company,Price")] Phone phone)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Company,Price,ImageFile")] Phone phone)
         {
             if (id != phone.Id)
             {
@@ -108,6 +125,19 @@ namespace MobilePhones.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (phone.ImageFile != null)
+                    {
+                        string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "phone_images");
+                        string fileName = $"{Guid.NewGuid().ToString()}_{phone.ImageFile.FileName}";
+                        string filePath = Path.Combine(folderPath, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            phone.ImageFile.CopyTo(stream);
+                        }
+
+                        phone.ImageName = fileName;
+                    }
                     _context.Update(phone);
                     await _context.SaveChangesAsync();
                 }
