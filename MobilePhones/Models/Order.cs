@@ -9,6 +9,7 @@ namespace MobilePhones.Models
     {
         public int OrderId { get; set; }
         public string User { get; set; }
+        public DateTime DateTime { get; set; }
         public string Address { get; set; }
         public string ContactPhone { get; set; }
 

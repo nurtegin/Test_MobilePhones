@@ -59,7 +59,7 @@ namespace MobilePhones.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,User,Address,ContactPhone,PhoneId")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderId,User,DateTime,Address,ContactPhone,PhoneId")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace MobilePhones.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,User,Address,ContactPhone,PhoneId")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderId,User,DateTime,Address,ContactPhone,PhoneId")] Order order)
         {
             if (id != order.OrderId)
             {
