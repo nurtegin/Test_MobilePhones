@@ -1,0 +1,109 @@
+﻿@model FileUploadViewModel
+@{
+    ViewData["Title"] = "Загрузка файлов";
+}
+<h4>Загрузка файлов</h4>
+<hr />
+
+<form method="post" enctype="multipart/form-data">
+
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label>Прикрепить файл</label>
+            <input type="file" name="files" multiple required />
+        </div>
+        <div class="col-sm-6">
+            <label for="file_upload_description">Описание файла</label>
+            <textarea placeholder="Описание файла" class="form-control"
+                      id="file_upload_description" rows="3" name="description" required></textarea>
+        </div>
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary" asp-controller="File" asp-action="UploadToFileSystem">Загрузка в файловую систему</button>
+            <br />
+            <br />
+            <button class="btn btn-success" type="submit" asp-controller="File" asp-action="UploadToDatabase">Загрузка в базу данных</button>
+
+        </div>
+    </div>
+</form>
+<hr />
+<h4>Файлы файловой системы</h4>
+@if (Model.FilesOnFileSystem.Count == 0)
+{
+    <caption>Нет файлов</caption>
+}
+else
+{
+    <caption>Список файлов файловой системы</caption>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Имя</th>
+                <th>Описание</th>
+                <th>Типа файла</th>
+                <th>Создано</th>
+                <th>Загрузил</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var file in Model.FilesOnFileSystem)
+            {
+            <tr>
+                <th>@file.Id</th>
+                <td>@file.Name</td>
+                <td>@file.Description</td>
+                <td>@file.FileType</td>
+                <td>@file.CreatedOn</td>
+                <td>@file.User.UserName</td>
+                <td>
+                    <a type="button" class="btn btn-primary" asp-controller="File" asp-action="DownloadFileFromFileSystem" asp-route-id="@file.Id">Загрузить</a>
+                    <a type="button" class="btn btn-danger" asp-controller="File" asp-action="DeleteFileFromFileSystem" asp-route-id="@file.Id">Удалить</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<hr />
+<h4>Файлы базы данных</h4>
+@if (Model.FilesOnDatabase.Count == 0)
+{
+    <caption>Нет файлов в бд</caption>
+}
+else
+{
+    <caption>Список файлов базы данных</caption>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Имя</th>
+                <th>Описание</th>
+                <th>Тип файла</th>
+                <th>Создано</th>
+                <th>Загрузил</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var file in Model.FilesOnDatabase)
+            {
+                <tr>
+                    <th>@file.Id</th>
+                    <td>@file.Name</td>
+                    <td>@file.Description</td>
+                    <td>@file.FileType</td>
+                    <td>@file.CreatedOn</td>
+                    <td>@file.User.UserName</td>
+                    <td>
+                        <a type="button" class="btn btn-primary" asp-controller="File" asp-action="DownloadFileFromDatabase" asp-route-id="@file.Id">Загрузить</a>
+                        <a type="button" class="btn btn-danger" asp-controller="File" asp-action="DeleteFileFromDatabase" asp-route-id="@file.Id">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
