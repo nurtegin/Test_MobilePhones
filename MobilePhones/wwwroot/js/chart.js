@@ -1,4 +1,6 @@
-﻿var chartColors = {
+﻿$.fn.select2.defaults.set("theme", "bootstrap4");
+
+var chartColors = {
     red: 'rgb(255, 99, 132)',
     orange: 'rgb(255, 159, 64)',
     green: 'rgb(75, 192, 192)',

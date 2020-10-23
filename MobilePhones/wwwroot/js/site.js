@@ -3,4 +3,3 @@
 
 // Write your JavaScript code.
 
-$.fn.select2.defaults.set("theme", "bootstrap4");

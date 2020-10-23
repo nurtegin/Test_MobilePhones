@@ -71,8 +71,6 @@ namespace MobilePhones.Areas.Admin.Controllers
 
             var resultData = new { datesarray = datesDistinct, ordersdata = phonesData };
             ViewBag.PhoneOrders = JsonConvert.SerializeObject(resultData);
-
-
             return View();
         }
     }

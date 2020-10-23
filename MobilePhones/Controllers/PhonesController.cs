@@ -43,6 +43,30 @@ namespace MobilePhones.Controllers
             return View(phone);
         }
 
+        [HttpPost]
+        public IActionResult Order(int phone_id, string user, string address, string phone)
+        {
+            var result = new object();
+            if (phone_id != 0 && phone != null)
+            {
+                Order order = new Order() { 
+                    PhoneId = phone_id, 
+                    User = user, 
+                    Address = address, 
+                    ContactPhone = phone,
+                    DateTime = DateTime.Now
+                };
+                _context.Add(order);
+                _context.SaveChanges();
+                result = new { message = "success" };
+            } else
+            {
+                result = new { message = "error" };
+            }
+
+            return Ok(result);
+        }
+
 
         private bool PhoneExists(int id)
         {

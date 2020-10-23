@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<MobilePhones.Models.Phone>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +8,113 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+
+
+<div class="card-deck mb-3 text-center">
+
+    @foreach (var phone in Model)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">@phone.Name</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">$@phone.Price <small class="text-muted"></small></h1>
+                <img src="@phone.ImagePath()" alt="Alternate Text" width="200" />
+                <hr />
+                <button type="button" class="order-btn btn btn-lg btn-block btn-outline-primary" 
+                        data-toggle="modal" data-target="#orderModal" data-phoneid="@phone.Id">Order</button>
+            </div>
+        </div>
+    }
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/" method="post" id="modal-order-form">
+                <input type="hidden" name="phone_id" value="" />
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ordering phone - <span id="ordertext"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body hide-on-ajax">
+                    <div class="form-group">
+                        <label for="user">Your name</label>
+                        <input type="text" class="form-control" id="user" name="user">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" name="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Your phones</label>
+                        <input type="text" class="form-control" id="phone" name="phone">
+                    </div>
+                </div>
+                <div class="modal-footer hide-on-ajax">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save changes">
+                </div>
+                <div class="modal-spinner">
+
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        var modalForm = $('form#modal-order-form');
+        
+        $('.order-btn').on('click', function () {
+            var phoneId = $(this).data('phoneid');
+            var phoneIdInput = $(modalForm).find('input[name="phone_id"]');
+            $(phoneIdInput).val(phoneId);
+            var cardEl = $(this).closest('div.card');
+            var phoneName = $($(cardEl).find('.font-weight-normal')).text()
+            $('#ordertext').text(phoneName);
+        })
+
+        $(modalForm).on('submit', function (e) {
+            e.preventDefault();
+
+            $('.hide-on-ajax').hide();
+            $('.modal-spinner').html('<div class="spinner-border text-info" role="status"><span class= "sr-only" > Loading...</span> </div>')
+            var formData = $(modalForm).serialize();
+            $.ajax({
+                url: "Phones/Order",
+                type: "POST",
+                data: formData,
+                success: function (data, textStatus, jqXHR) {
+                    var text = '';
+                    if (data.message == "success") {
+                        text = 'Заказ был успешно оформлен. Ожидайте телефонного звонка от наших менеджеров'
+                    } else {
+                        text = 'Не удалось оформить заказ, что-то пошло не так'
+                    }
+                    $('.modal-spinner').html('<h3>' + text + '</h3>');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR)
+                    console.log(textStatus)
+                    console.log(errorThrown)
+                }
+            });
+        });
+
+        $('#orderModal').on('hidden.bs.modal', function (e) {
+            $('.hide-on-ajax').show();
+            $('.modal-spinner').html('');
+        })
+
+    </script>
+}

@@ -69,3 +69,37 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.container {
+    max-width: 960px;
+}
+
+.pricing-header {
+    max-width: 700px;
+}
+
+.card-deck .card {
+    min-width: 220px;
+}
+.modal-spinner .spinner-border {
+    width: 200px;
+    height: 200px;
+    border-width: 10px
+}
+
+.modal-spinner {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
