@@ -26,7 +26,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
+                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                @SharedLocalizer["adminpanel"]
+                            </a>
                         </li>
 
 
@@ -34,7 +36,7 @@
                         {
                             <li class="nav-item">
                                 <form method="post" asp-controller="Account" asp-action="LogOff" class="nav-link text-dark">
-                                    <input type="submit" value="@User.Identity.Name Выход" class="form-control"/>
+                                    <input type="submit" value="@User.Identity.Name Выход" class="form-control" />
                                 </form>
 
                             </li>
@@ -48,6 +50,9 @@
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Регистрация</a>
                             </li>
                         }
+                        <li class="nav-item">
+                            @await Html.PartialAsync("_SelectLanguagePartial")
+                        </li>
 
 
                     </ul>

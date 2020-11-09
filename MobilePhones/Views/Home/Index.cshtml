@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<MobilePhones.Models.Phone>
 
-@{
-    ViewData["Title"] = "Home Page";
-}
+
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">@ViewBag.Title</h1>
+    <p>@ViewBag.Message</p>
 </div>
 
+<h2>@Localizer["Prices"]</h2>
 
 
 <div class="card-deck mb-3 text-center">
